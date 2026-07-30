@@ -172,6 +172,17 @@ jobs:
           echo "=== Defconfig ==="
           grep KSU arch/arm64/configs/${{ inputs.codename }}_defconfig || true
 
+      - name: Test KernelSU config
+        run: |
+          cd "$CONFIG"
+      
+          make ${{ inputs.codename }}_defconfig
+      
+          echo "=== Generated config ==="
+          grep KSU .config || true
+      
+          exit 1
+
       - name: Build the Kernel
         run: |
           echo "Changing to configuration directory: $CONFIG..."
